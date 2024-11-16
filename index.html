@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LXD Client</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            background: linear-gradient(to bottom, #141e30, #243b55);
+            color: white;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #1b1b1b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+        }
+        .sidebar button {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .sidebar button:hover {
+            background-color: #0056b3;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+        }
+        .container h1 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        .container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .container button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        .container button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <button onclick="loadCodeInput('Code 1')">Code 1</button>
+        <button onclick="loadCodeInput('Code 2')">Code 2</button>
+        <button onclick="loadCodeInput('Code 3')">Code 3</button>
+        <button onclick="exitApp()">Beenden</button>
+    </div>
+    <div class="content">
+        <div class="container" id="codeContainer">
+            <h1 id="title">Launcher</h1>
+            <input type="text" id="codeInput" placeholder="Code eingeben">
+            <button onclick="submitCode()">Bestätigen</button>
+            <div class="status" id="status"></div>
+        </div>
+    </div>
+
+    <script>
+        function loadCodeInput(codeType) {
+            const title = document.getElementById('title');
+            const codeInput = document.getElementById('codeInput');
+            const status = document.getElementById('status');
+            
+            // Dynamisch den Titel und das Eingabefeld ändern
+            title.textContent = codeType;
+            codeInput.value = '';
+            status.textContent = '';
+        }
+
+        function submitCode() {
+            const code = document.getElementById('codeInput').value;
+            const status = document.getElementById('status');
+
+            if (code === "Luca") {
+                status.textContent = "Code gültig! Zugriff gewährt.";
+                status.style.color = "#d4edda"; // Grün
+            } else {
+                status.textContent = "Ungültiger Code!";
+                status.style.color = "#f8d7da"; // Rot
+            }
+        }
+
+        function exitApp() {
+            const { remote } = require('electron');
+            remote.app.quit();
+        }
+    </script>
+</body>
+</html>
